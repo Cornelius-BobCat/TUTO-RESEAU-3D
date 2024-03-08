@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { ForceGraph3D } from "react-force-graph";
 import { Github } from "lucide-react";
 import Image from "next/image";
@@ -17,7 +17,7 @@ export default function Home() {
   const [counter, setCounter] = useState(300);
 
   useEffect(() => {
-    if (counter === 1) {
+    if (counter === 0) {
       const fetchMoreData = async () => {
         const nextUrl = `/api/wikipedia?offset=${data?.nodes.length}&limit=5`; // Calculate offset based on current data
         const newData = await fetcher(nextUrl);
@@ -30,12 +30,14 @@ export default function Home() {
       fetchMoreData();
       setCounter(300);
     }
+  }, [counter]);
 
+  useEffect(() => {
     const interval = setInterval(() => {
       setCounter((prev) => prev - 1);
     }, 1000);
     return () => clearInterval(interval);
-  }, [counter]);
+  }, []);
 
   if (error) return <div>échec du chargement</div>;
   if (isLoading)
