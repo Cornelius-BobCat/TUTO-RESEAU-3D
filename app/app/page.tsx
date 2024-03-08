@@ -21,11 +21,13 @@ export default function Home() {
       const fetchMoreData = async () => {
         const nextUrl = `/api/wikipedia?offset=${data?.nodes.length}&limit=5`; // Calculate offset based on current data
         const newData = await fetcher(nextUrl);
-        mutate((currentData: any) => ({
-          ...currentData,
-          nodes: [...currentData.nodes, ...newData.nodes], // Concatenate existing and new nodes
-          links: [...currentData.links, ...newData.links], // Concatenate existing and new links
-        }));
+        if (newData) {
+          mutate((currentData: any) => ({
+            ...currentData,
+            nodes: [...currentData.nodes, ...newData.nodes], // Concatenate existing and new nodes
+            links: [...currentData.links, ...newData.links], // Concatenate existing and new links
+          }));
+        }
       };
       fetchMoreData();
       setCounter(300);
