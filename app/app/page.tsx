@@ -1,11 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ForceGraph3D } from "react-force-graph";
+//import { ForceGraph3D } from "react-force-graph";
 import { Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import useSWR from "swr";
-
+import dynamic from "next/dynamic";
+const ForceGraph3D = dynamic(() => import("react-force-graph-3d"), {
+  ssr: false,
+});
 type Data = {
   nodes: { id: string; url: string; texte: string; createdAt: Date }[];
   links: { source: string; target: string }[];
