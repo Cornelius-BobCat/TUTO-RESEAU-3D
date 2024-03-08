@@ -14,7 +14,7 @@ export default function Graph() {
   const fetcher = (url: string) => fetch(url).then((r) => r.json());
   const { data, error, isLoading, mutate } = useSWR("/api/wikipedia", fetcher);
 
-  const [counter, setCounter] = useState(5);
+  const [counter, setCounter] = useState(300);
 
   useEffect(() => {
     if (counter === 0) {
@@ -30,7 +30,7 @@ export default function Graph() {
         }
       };
       fetchMoreData();
-      setCounter(5);
+      setCounter(300);
     }
   }, [counter]);
 
@@ -66,7 +66,7 @@ export default function Graph() {
         </Link>
         <Link
           target="_blank"
-          href="https://github.com/Cornelius-BobCat/reseau3D/tree/master"
+          href="https://github.com/Cornelius-BobCat/TUTO-RESEAU-3D"
           className="hover:bg-black bg-stone-200/10 text-white text-xs rounded-xl p-2"
         >
           <Github size={14} />
