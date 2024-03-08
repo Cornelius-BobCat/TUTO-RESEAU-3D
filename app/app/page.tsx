@@ -1,5 +1,5 @@
 "use client";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ForceGraph3D } from "react-force-graph";
 import { Github } from "lucide-react";
 import Image from "next/image";
@@ -14,7 +14,7 @@ export default function Home() {
   const fetcher = (url: string) => fetch(url).then((r) => r.json());
   const { data, error, isLoading, mutate } = useSWR("/api/wikipedia", fetcher);
 
-  const [counter, setCounter] = useState(300);
+  const [counter, setCounter] = useState(5);
 
   useEffect(() => {
     if (counter === 0) {
@@ -30,7 +30,7 @@ export default function Home() {
         }
       };
       fetchMoreData();
-      setCounter(300);
+      setCounter(5);
     }
   }, [counter]);
 
