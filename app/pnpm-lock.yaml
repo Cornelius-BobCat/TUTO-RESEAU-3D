@@ -35,6 +35,9 @@ dependencies:
   react-force-graph:
     specifier: ^1.44.3
     version: 1.44.3(react@18.2.0)(three@0.162.0)
+  react-force-graph-3d:
+    specifier: ^1.24.2
+    version: 1.24.2(react@18.2.0)
   swr:
     specifier: ^2.2.5
     version: 2.2.5(react@18.2.0)
@@ -3052,6 +3055,18 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-force-graph-3d@1.24.2(react@18.2.0):
+    resolution: {integrity: sha512-/tZ0BywYuj35Q84AH2WN+Cx0RIygnN5F1+EvsdAqsAMoIJ0xl4L/9aD/pwjCoWfFqi3w5wR2DQuitDXeTayZnQ==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      3d-force-graph: 1.73.2
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-kapsule: 2.4.0(react@18.2.0)
     dev: false
 
   /react-force-graph@1.44.3(react@18.2.0)(three@0.162.0):
