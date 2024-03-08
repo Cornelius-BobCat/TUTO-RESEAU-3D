@@ -4,50 +4,50 @@ import { ForceGraph3D } from "react-force-graph";
 import { Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import useSWR from "swr";
 
 type Data = {
   nodes: { id: string; url: string; texte: string; createdAt: Date }[];
   links: { source: string; target: string }[];
 };
-export default function Graph(props: { data: Data }) {
-  const dataA = props.data;
-  const [data, setData] = useState<Data>(dataA);
-  const [counter, setCounter] = useState(6);
-  const [offset, setOffset] = useState(dataA.nodes.length);
+export default function Graph() {
+  const fetcher = (url: string) => fetch(url).then((r) => r.json());
+  const { data, error, isLoading, mutate } = useSWR("/api/wikipedia", fetcher);
 
-  const FetchData = async () => {
-    console.log(offset);
-    const res = await fetch(
-      `${process.env.BASEURL}/api/wikipedia?offset=${offset}&limit=5`,
-      {
-        headers: {
-          Accept: "application/json",
-          method: "GET",
-          cache: "no-store",
-        },
-      }
-    );
-    if (res) {
-      const newJson = await res.json();
-      setData((prevData) => ({
-        nodes: [...(prevData?.nodes || []), ...newJson.nodes],
-        links: [...(prevData?.links || []), ...newJson.links],
-      }));
-    }
-  };
+  const [counter, setCounter] = useState(5);
 
   useEffect(() => {
-    setOffset(data?.nodes.length);
     if (counter === 0) {
-      FetchData();
-      setCounter(60);
+      const fetchMoreData = async () => {
+        const nextUrl = `/api/wikipedia?offset=${data?.nodes.length}&limit=5`; // Calculate offset based on current data
+        const newData = await fetcher(nextUrl);
+        if (newData) {
+          mutate((currentData: any) => ({
+            ...currentData,
+            nodes: [...currentData.nodes, ...newData.nodes], // Concatenate existing and new nodes
+            links: [...currentData.links, ...newData.links], // Concatenate existing and new links
+          }));
+        }
+      };
+      fetchMoreData();
+      setCounter(5);
     }
+  }, [counter]);
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setCounter((prev) => prev - 1);
     }, 1000);
     return () => clearInterval(interval);
-  }, [counter]);
+  }, []);
 
+  if (error) return <div>échec du chargement</div>;
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-stone-200"></div>
+      </div>
+    );
   return (
     <div>
       <div className="absolute z-50 top-4 right-4 flex flex-col justify-center items-center space-y-4">
