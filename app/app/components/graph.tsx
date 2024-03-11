@@ -5,7 +5,6 @@ import { Github, InfinityIcon, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import useSWR from "swr";
-import { delay } from "lodash";
 
 type Data = {
   nodes: { id: string; url: string; texte: string; createdAt: Date }[];
@@ -22,9 +21,7 @@ export default function Graph() {
 
   useEffect(() => {
     if (counter === 0) {
-      delay(() => {
-        setRelaod(true);
-      }, 4000);
+      setRelaod(true);
       const fetchMoreData = async () => {
         const nextUrl = `/api/wikipedia?offset=${data?.nodes.length}&limit=5`; // Calculate offset based on current data
         const newData = await fetcher(nextUrl);
@@ -131,7 +128,7 @@ export default function Graph() {
             {!relaod ? (
               <>{counter} seconds before next fetch</>
             ) : (
-              "fetching data"
+              "fetching data ..."
             )}
           </div>
         </div>
@@ -153,6 +150,6 @@ const timeToNextTenMinutes = () => {
   const currentMinutes = now.getUTCMinutes();
   const currentSeconds = now.getUTCSeconds();
   const totalSecondsSinceHourStart = currentMinutes * 60 + currentSeconds;
-  const secondsUntilNextTenMinutes = 600 - (totalSecondsSinceHourStart % 600);
+  const secondsUntilNextTenMinutes = 660 - (totalSecondsSinceHourStart % 660);
   return secondsUntilNextTenMinutes;
 };
