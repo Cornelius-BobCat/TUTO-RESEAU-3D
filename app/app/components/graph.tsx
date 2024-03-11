@@ -41,7 +41,7 @@ export default function Graph() {
 
   useEffect(() => {
     setCounter(timeToNextTenMinutes());
-  }, []);
+  }, [counter]);
 
   const Rerun = () => {
     setInfinity(!infinity);
