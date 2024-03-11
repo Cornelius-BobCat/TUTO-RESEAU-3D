@@ -37,10 +37,9 @@ export default function Graph() {
       setCounter(timeToNextTenMinutes());
       setRelaod(false);
     }
-  }, [counter]);
-
-  useEffect(() => {
-    setCounter(timeToNextTenMinutes());
+    if (counter > 0) {
+      setCounter(timeToNextTenMinutes());
+    }
   }, [counter]);
 
   const Rerun = () => {
