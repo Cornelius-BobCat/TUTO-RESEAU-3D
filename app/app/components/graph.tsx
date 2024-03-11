@@ -150,6 +150,6 @@ const timeToNextTenMinutes = () => {
   const currentMinutes = now.getUTCMinutes();
   const currentSeconds = now.getUTCSeconds();
   const totalSecondsSinceHourStart = currentMinutes * 60 + currentSeconds;
-  const secondsUntilNextTenMinutes = 660 - (totalSecondsSinceHourStart % 660);
+  const secondsUntilNextTenMinutes = 600 - (totalSecondsSinceHourStart % 600);
   return secondsUntilNextTenMinutes;
 };
