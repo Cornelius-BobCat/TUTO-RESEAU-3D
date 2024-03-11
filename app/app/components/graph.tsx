@@ -36,9 +36,9 @@ export default function Graph() {
       };
       setTimeout(() => {
         fetchMoreData();
+        setCounter(timeToNextTenMinutes());
+        setRelaod(false);
       }, 4000);
-      setCounter(timeToNextTenMinutes());
-      setRelaod(false);
     }
   }, [counter]);
 
