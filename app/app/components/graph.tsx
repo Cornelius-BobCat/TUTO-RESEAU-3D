@@ -42,7 +42,7 @@ export default function Graph() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCounter((prev) => prev - 1);
-    }, 1000);
+    }, 900);
     return () => clearInterval(interval);
   }, []);
 
@@ -57,7 +57,7 @@ export default function Graph() {
         <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-stone-200"></div>
       </div>
     );
-  console.log(relaod);
+
   return (
     <div>
       {infinity && (
