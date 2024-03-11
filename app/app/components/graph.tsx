@@ -22,9 +22,7 @@ export default function Graph() {
 
   useEffect(() => {
     if (counter === 1) {
-      setInterval(() => {
-        setRelaod(true);
-      }, 5000);
+      setRelaod(true);
       const fetchMoreData = async () => {
         const nextUrl = `/api/wikipedia?offset=${data?.nodes.length}&limit=5`; // Calculate offset based on current data
         const newData = await fetcher(nextUrl);
@@ -36,7 +34,9 @@ export default function Graph() {
           }));
         }
       };
-      fetchMoreData();
+      setTimeout(() => {
+        fetchMoreData();
+      }, 4000);
       setCounter(timeToNextTenMinutes());
       setRelaod(false);
     }
