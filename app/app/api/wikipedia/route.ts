@@ -25,6 +25,7 @@ export async function GET(request: NextRequest) {
   }));
 
   client.close();
-  //console.log({ nodes, links });
+  console.log({ nodes, links });
+  //console.log(params);
   return NextResponse.json({ nodes, links });
 }
