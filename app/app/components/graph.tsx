@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { ForceGraph3D } from "react-force-graph";
 import { Github, InfinityIcon, X } from "lucide-react";
 import Image from "next/image";
@@ -37,10 +37,14 @@ export default function Graph() {
       setCounter(timeToNextTenMinutes());
       setRelaod(false);
     }
-    if (counter > 0) {
-      setCounter(timeToNextTenMinutes());
-    }
   }, [counter]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCounter(timeToNextTenMinutes());
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
 
   const Rerun = () => {
     setInfinity(!infinity);
