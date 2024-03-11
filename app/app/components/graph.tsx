@@ -22,7 +22,7 @@ export default function Graph() {
 
   useEffect(() => {
     if (counter === 1) {
-      delay(() => {
+      setInterval(() => {
         setRelaod(true);
       }, 5000);
       const fetchMoreData = async () => {
