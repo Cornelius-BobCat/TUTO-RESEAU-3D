@@ -40,10 +40,7 @@ export default function Graph() {
   }, [counter]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCounter((prev) => prev - 1);
-    }, 900);
-    return () => clearInterval(interval);
+    setCounter(timeToNextTenMinutes());
   }, []);
 
   const Rerun = () => {
