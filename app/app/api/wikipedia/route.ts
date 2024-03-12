@@ -3,10 +3,12 @@ import { MongoClient } from "mongodb";
 
 export async function GET(request: NextRequest) {
   const client = new MongoClient(process.env.MONGODB!);
+  // connect to the database
   const dbName = "reseau";
   const collectionName = "wikipedia";
   const db = client.db(dbName);
   const collection = db.collection(collectionName);
+  // request params for offset and limit
   const params = request.nextUrl.searchParams;
   const offset = Number(params.get("offset")) || 0;
   const limit = Number(params.get("limit")) || 0;

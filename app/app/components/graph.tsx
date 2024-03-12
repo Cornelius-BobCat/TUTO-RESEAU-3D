@@ -1,39 +1,47 @@
 "use client";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ForceGraph3D } from "react-force-graph";
 import { Github, InfinityIcon, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import useSWR from "swr";
-import { delay } from "lodash";
 
+// init type for data (nodes and links)
 type Data = {
   nodes: { id: string; url: string; texte: string; createdAt: Date }[];
   links: { source: string; target: string }[];
 };
 export default function Graph() {
+  // init state
   const [infinity, setInfinity] = useState(false);
+  //init state for reload
   const [relaod, setRelaod] = useState(false);
+  // init fetcher function
   const fetcher = (url: string) => fetch(url).then((r) => r.json());
-
+  // useSWR hook
   const { data, error, isLoading, mutate } = useSWR("/api/wikipedia", fetcher);
-
+  // init counter state
   const [counter, setCounter] = useState(timeToNextTenMinutes());
 
   useEffect(() => {
+    // id counter === 1, fetch new data
     if (counter === 1) {
       setRelaod(true);
+      // func async in client with useEffect
       const fetchMoreData = async () => {
-        const nextUrl = `/api/wikipedia?offset=${data?.nodes.length}&limit=5`; // Calculate offset based on current data
+        const nextUrl = `/api/wikipedia?offset=${data?.nodes.length}&limit=5`;
+        // use fetcher to get the new data
         const newData = await fetcher(nextUrl);
+        //if newData exist, add it to the current data
         if (newData) {
           mutate((currentData: any) => ({
             ...currentData,
-            nodes: [...currentData.nodes, ...newData.nodes], // Concatenate existing and new nodes
-            links: [...currentData.links, ...newData.links], // Concatenate existing and new links
+            nodes: [...currentData.nodes, ...newData.nodes],
+            links: [...currentData.links, ...newData.links],
           }));
         }
       };
+      // setinterval for delta bettewen fetch and scrapping ec2
       setTimeout(() => {
         fetchMoreData();
         setCounter(timeToNextTenMinutes());
@@ -42,6 +50,7 @@ export default function Graph() {
     }
   }, [counter]);
 
+  // counter ( time interval for before fetch)
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCounter(timeToNextTenMinutes());
@@ -49,11 +58,15 @@ export default function Graph() {
     return () => clearInterval(intervalId);
   }, []);
 
+  // on click rerun icon
   const Rerun = () => {
     setInfinity(!infinity);
   };
 
+  // if (error) return <div>failed to load</div>;
   if (error) return <div>échec du chargement</div>;
+
+  // if (!data) return <div>loading...</div>;
   if (isLoading)
     return (
       <div className="flex justify-center items-center h-screen">
@@ -148,6 +161,10 @@ export default function Graph() {
   );
 }
 
+/**
+ * Calculates the number of seconds until the next ten-minute mark.
+ * @returns The number of seconds until the next ten-minute mark.
+ */
 const timeToNextTenMinutes = () => {
   const now = new Date();
   const currentMinutes = now.getUTCMinutes();

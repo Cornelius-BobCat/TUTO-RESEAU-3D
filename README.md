@@ -5,6 +5,13 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 First, run the development server:
 
 ```bash
+#install react nextjs
+npx create-next-app@latest
+#install force 3d
+pnpm install react-force-graph-3d
+# mongo
+npm install mongodb
+
 npm run dev
 # or
 yarn dev
