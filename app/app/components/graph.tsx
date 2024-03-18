@@ -139,7 +139,7 @@ export default function Graph() {
           <div className="flex flex-rows">
             <span>{data?.nodes.length} Nodes</span>
           </div>
-
+          <pre className="textxs text-stone-500">base dump every 10 days</pre>
           <div className="text-sm text-slate-400">
             {!relaod ? (
               <>{counter} seconds before next fetch</>
